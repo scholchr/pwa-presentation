@@ -1,49 +1,183 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/solarized.css">
+	<title>WebWiB goes PWA</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/league.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h2>WebWiB goes PWA</h2>
+			</section>
+			<section>
+				<h3>Was heisst Progressive Web App (PWA)?</h3>
+				<p class="fragment">Schrittweises Verbessern von Webseiten</p>
+				<p class="fragment">Ziel: Aussehen und Verhalten wie eine native Anwendung</p>
+				<p class="fragment">Mittels Zusammenspiel verschiedener Technologien/Konzepte</p>
+			</section>
+			<section>
+				<h3>Eigenschaften einer PWA</h3>
+				<p class="fragment">
+					<b>Reliable</b>: Schnelles Laden und Offlinefunktionalität</p>
+				<p class="fragment">
+					<b>Fast</b>: Laufzeitverhalten (Useractions, intuitiver Zugriff auf Gerätefunktionen)</p>
+				<p class="fragment">
+					<b>Engaging</b>: Homescreen-Icon, Benachrichtigungen</p>
+			</section>
+			<section>
+				<h3>Ausgewählte Technologien im Überblick</h3>
+				<section>
+					<h4>Single Page Application</h4>
+					<p class="fragment">Sämtliche HTML-, JS- und CSS-Dateien werden initial geladen</p>
+					<p class="fragment">Stichworte: Minification, Bundling, Ahead-of-Time, Tree-Shaking</p>
+					<p class="fragment">Der dynamischer Inhalt wird mittels Useraktion per Web-Service nachgeladen</p>
+					<aside class="notes">
+
+					</aside>
+				</section>
+				<section>
+					<h3>ServiceWorker</h3>
+					<p class="fragment">Konfigurierbarer Netzwerkproxy</p>
+					<p class="fragment">Kann im Hintergrund arbeiten</p>
+					<p class="fragment">3</p>
+				</section>
+				<section>
+					<h3>ServiceWorker</h3>
+					<pre>
+<code>"index": "/index.html",
+"assetGroups": [{
+	"name": "app",
+	"installMode": "prefetch",
+	"resources": {
+	"files": [
+		"/favicon.ico",
+		"/index.html"
+	],
+	"versionedFiles": [
+		"/*.bundle.css",
+		"/*.bundle.js",
+		"/*.chunk.js"
+	]}
+}, ...				</code></pre>
+					<aside class="notes">
+						Test
+					</aside>
+				</section>
+				<section>
+					<h3>ServiceWorker</h3>
+					<pre>
+<code>... 
+{
+	"name": "assets",
+	"installMode": "lazy",
+	"updateMode": "prefetch",
+	"resources": {
+	"files": [
+		"/assets/**"
+	]}
+}],
+...</code>
+					</pre>
+				</section>
+				<section>
+					<pre>
+<code>...
+"dataGroups": [{
+	"name": "from-api",
+	"urls": ["https://domain.tld/webwib-api/**"],
+	"cacheConfig": {
+	"strategy": "freshness",
+	"maxSize": 15,
+	"maxAge": "1h",
+	"timeout": "5s"
+	}
+}]</code>			</pre>
+				</section>
+				<section>
+					<h2>Web App Manifest</h2>
+					<pre>
+<code>"short_name": "Maps",
+"name": "Google Maps",
+"icons": [
+	{
+	"src": "/images/icons-192.png",
+	"type": "image/png",
+	"sizes": "192x192"
+	},
+	{
+		...
+	}
+],
+"start_url": "/maps/?source=pwa",
+"background_color": "#3367D6",
+"display": "standalone",
+"theme_color": "#3367D6"</code></pre>
+				</section>
+			</section>
+			<section>
+				<h4>PWA-Check (Lighthouse)</h4>
+				<p>
+					<img src="img/pwa-lighthouse.png" width="10%">
+				</p>
+				<span class="fragment">
+					<p>HTTPS</p>
+					<p>Responsiveness</p>
+				</span>
+				<span class="fragment">
+					<p>Alle App-URLs lassen sich Offline betrachten</p>
+					<p>WebApp Manifest (Add to Homescreen)</p>
+				</span>
+				<span class="fragment">
+					<p>Initiale Ladezeiten
+						<10s unter 3G-Bedingungen</p>
+							<p>Seitenübergänge: Sofort/Platzhalter/Ladeindikator</p>
+							<p>Jede Seite hat eine eigene URL</p>
+				</span>
+			</section>
+			<section>
+				<h3>Danke für die Aufmerksamkeit.</h3>
+				<p>Fragen?</p>
+			</section>
 		</div>
+	</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			],
+			margin: 0
+		});
+	</script>
+</body>
+
 </html>

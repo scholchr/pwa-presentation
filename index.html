@@ -9,6 +9,8 @@
 
 	<link rel="stylesheet" href="css/reveal.css">
 	<link rel="stylesheet" href="css/theme/league.css">
+	<link rel="stylesheet" href="css/custom.css">
+
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -27,7 +29,10 @@
 	<div class="reveal">
 		<div class="slides">
 			<section>
-				<h2>WebWiB goes PWA</h2>
+				<h2 class="fragment">WebWiB goes PWA</h2>
+				<img src="img/webwib.svg" height="150px">
+				<img src="img/goes.png" height="150px">
+				<img src="img/pwa.svg" height="150px">
 			</section>
 			<section>
 				<h3>Was heisst Progressive Web App (PWA)?</h3>
@@ -59,7 +64,6 @@
 					<h3>ServiceWorker</h3>
 					<p class="fragment">Konfigurierbarer Netzwerkproxy</p>
 					<p class="fragment">Kann im Hintergrund arbeiten</p>
-					<p class="fragment">3</p>
 				</section>
 				<section>
 					<h3>ServiceWorker</h3>
@@ -80,7 +84,7 @@
 	]}
 }, ...				</code></pre>
 					<aside class="notes">
-						Test
+						Installmode: initiales Laden
 					</aside>
 				</section>
 				<section>
@@ -98,6 +102,9 @@
 }],
 ...</code>
 					</pre>
+					<aside class="notes">
+						Installmode: nach Request cachen
+					</aside>
 				</section>
 				<section>
 					<pre>
@@ -112,6 +119,10 @@
 	"timeout": "5s"
 	}
 }]</code>			</pre>
+					<aside class="notes">
+						Freshness: Nur bei Timeout wird vom Cache geladen
+						Performance: Wird standardmässig per Cache geladen iVm maxAge
+					</aside>
 				</section>
 				<section>
 					<h2>Web App Manifest</h2>
@@ -133,6 +144,10 @@
 "display": "standalone",
 "theme_color": "#3367D6"</code></pre>
 				</section>
+				<section>
+					<h4>Browserunterstützung</h4>
+					<img src="img/sw_support.png" width="50%">
+				</section>
 			</section>
 			<section>
 				<h4>PWA-Check (Lighthouse)</h4>
@@ -149,7 +164,7 @@
 				</span>
 				<span class="fragment">
 					<p>Initiale Ladezeiten
-						<10s unter 3G-Bedingungen</p>
+						 unter 10s unter 3G-Bedingungen</p>
 							<p>Seitenübergänge: Sofort/Platzhalter/Ladeindikator</p>
 							<p>Jede Seite hat eine eigene URL</p>
 				</span>
